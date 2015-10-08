@@ -1,0 +1,29 @@
+{
+  "name": "scroll-proxy",
+  "version": "0.1.0",
+  "authors": [
+    "Matheus Kautzmann <kautzmann5@gmail.com>"
+  ],
+  "description": "Modular proxy for the scroll event. Useful set of functions to help improve scroll performance",
+  "main": "scroll-proxy.bundle.js",
+  "moduleType": [],
+  "keywords": [
+    "scroll",
+    "performance",
+    "perf",
+    "proxy"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/mkautzmann/scroll-proxy",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "mocha": "~2.3.3",
+    "chai": "~3.3.0"
+  }
+}

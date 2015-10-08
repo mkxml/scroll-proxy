@@ -1,0 +1,46 @@
+{
+  "name": "scroll-proxy",
+  "version": "0.1.0",
+  "description": "Modular proxy for the scroll event. Useful set of functions to help improve scroll performance.",
+  "main": "scroll-proxy.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mkautzmann/scroll-proxy.git"
+  },
+  "keywords": [
+    "scroll",
+    "proxy",
+    "performance",
+    "perf",
+    "browser",
+    "browserify"
+  ],
+  "author": "Matheus Kautzmann <kautzmann5@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mkautzmann/scroll-proxy/issues"
+  },
+  "homepage": "https://github.com/mkautzmann/scroll-proxy",
+  "devDependencies": {
+    "browserify": "^11.2.0",
+    "coffee-script": "^1.10.0",
+    "coffeeify": "^1.1.0",
+    "coffeelint": "^1.13.0",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.1",
+    "grunt-codo": "^0.2.0",
+    "grunt-coffeelint": "0.0.13",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-connect": "^0.11.2",
+    "grunt-contrib-uglify": "^0.9.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-http-server": "^1.10.1",
+    "grunt-mocha": "^0.4.13",
+    "uglifyify": "^3.0.1",
+    "wallabify": "0.0.10"
+  }
+}

@@ -1,0 +1,3 @@
+# Ignore everything not needed on production runtime (NPM package)
+# TODO: Verify if ignoring folders is OK!
+demo

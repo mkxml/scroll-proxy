@@ -1,0 +1,9 @@
+# Ignore basic OS files
+.DS_Store
+Thumbs.db
+
+# Ignore node dependencies
+node_modules/
+
+# Ignore npm files
+npm-debug.log
