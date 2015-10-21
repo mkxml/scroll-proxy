@@ -5,7 +5,7 @@
     "Matheus Kautzmann <kautzmann5@gmail.com>"
   ],
   "description": "Modular proxy for the scroll event. Useful set of functions to help improve scroll performance",
-  "main": "scroll-proxy.bundle.js",
+  "main": "dist/scroll-proxy.standalone.js",
   "moduleType": [],
   "keywords": [
     "scroll",
@@ -19,11 +19,16 @@
     "**/.*",
     "node_modules",
     "bower_components",
+    "dev",
     "test",
-    "tests"
+    "lib",
+    "browserSupport.json",
+    "Gruntfile.coffee",
+    "coffeelint.json",
+    "circle.yml",
+    "wallaby.js"
   ],
   "devDependencies": {
-    "mocha": "~2.3.3",
-    "chai": "~3.3.0"
+    "mocha": "~2.3.3"
   }
 }
