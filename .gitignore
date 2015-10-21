@@ -1,0 +1,12 @@
+# Ignore basic OS files
+.DS_Store
+Thumbs.db
+
+# Ignore node dependencies
+node_modules
+
+# Ignore bower dependencies
+bower_components
+
+# Ignore npm files
+npm-debug.log
