@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scroll-proxy's Dev</title>
+  <style>
+
+    /* Resetting some stuff */
+
+    * {
+      box-sizing: border-box;
+    }
+    html {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Really dumb CSS here, debugging purposes only */
+
+    body {
+      width: inherit;
+      height: inherit;
+      margin: inherit;
+      padding: inherit;
+      font-size: 16px;
+      background: white;
+    }
+
+    /* Setting a really tall div here */
+    .content {
+      width: 100%;
+      height: 2000px;
+      background: lightgray;
+    }
+
+    h1 {
+      margin: 0;
+      padding-top: 5px;
+      padding-left: 20px;
+      font-family: 'Lucida Grande', 'sans-serif', 'Arial';
+    }
+
+    /* A scrollable div inside content */
+    .scrollable {
+      position: absolute;
+      top: 130px;
+      left: 20px;
+      overflow: scroll;
+      width: 50%;
+      height: 300px;
+      background: tan;
+    }
+
+    /* Creating a larger scroll area */
+    .talldiv {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1000px;
+      height: 1000px;
+      background: transparent;
+    }
+
+    /* Element inside the scroll area to test visibility */
+    .square {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50px;
+      height: 50px;
+      margin: 0;
+      padding: 0;
+      background: red;
+    }
+
+    /* Button to test hover animations */
+    button {
+      display: block;
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      width: 200px;
+      height: 50px;
+      background: green;
+      color: white;
+      border: 0;
+    }
+
+    button:hover {
+      background: blue;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>Test ScrollProxy with the browser inspector!</h1>
+    <div class="scrollable">
+      <div class="square"></div>
+      <div class="talldiv"></div>
+    </div>
+    <button>TEST HOVER ON ME!</button>
+  </div>
+  <script src="./scroll-proxy.js"></script>
+</body>
+</html>
