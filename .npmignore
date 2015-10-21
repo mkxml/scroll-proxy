@@ -1,3 +1,14 @@
-# Ignore everything not needed on production runtime (NPM package)
-# TODO: Verify if ignoring folders is OK!
-demo
+.DS_Store
+Thumbs.db
+bower_components
+dev
+dist
+test
+.gitattributes
+.gitignore
+.editorconfig
+browserSupport.json
+circle.yml
+coffeelint.json
+Gruntfile.coffee
+wallaby.js
