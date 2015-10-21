@@ -10,13 +10,11 @@
     - grunt dev = Compiles everything with source maps, runs tests and generate
       documentation and some working code on the dev folder. Nice for debugging.
 
-    - grunt build = Does everything `grunt stage` does but for distribution
+    - grunt build = Does everything `grunt dev` does but for distribution
       and also minifies code leaving both the standalone bundle and the module
-      ready to production on the root folder.
+      ready to production in the dist folder.
 
     Also, there are some individual grunt tasks, for more info run `grunt help`
-
-  Attention contributors: check the CONTRIBUTING.md file before sending stuff.
 ###
 
 module.exports = (grunt) ->
@@ -40,34 +38,58 @@ module.exports = (grunt) ->
       }
     }
 
-    # Browserify testing bundle and bundle for module and standalone
+    # Compiles coffee for module distribution
+    coffee: {
+      module: {
+        options: {
+          bare: true
+        }
+        files: {
+          'lib/SUtil.js': 'src/SUtil.coffee'
+          'lib/ScrollProxy.js': 'src/ScrollProxy.coffee'
+        }
+      }
+    }
+
+    # Minifying the module
+    uglify: {
+      module: {
+        options: {
+          mangle: true
+          compress: {
+            booleans: true
+            conditionals: true
+            dead_code: true
+            drop_console: true
+            drop_debugger: true
+            loops: true
+            sequences: true
+          }
+        }
+        files: {
+          'lib/SUtil.js': 'lib/SUtil.js'
+          'lib/ScrollProxy.js': 'lib/ScrollProxy.js'
+        }
+      }
+    }
+
+    # Browserify testing bundle and bundle for standalone lib
     browserify: {
       standalone: {
         src: ['src/*.coffee']
-        dest: '<%= pkg.name %>.standalone.js'
+        dest: 'dist/<%= pkg.name %>.standalone.js'
         options: {
           transform: ['coffeeify', 'uglifyify']
           browserifyOptions: {
-            standalone: '<%= pkg.name %>'
-            extensions: '.coffee'
-          }
-          banner: '/*<%= pkg.name %>@<%= pkg.version %>*/'
-        }
-      }
-      module: {
-        src: ['src/*.coffee']
-        dest: '<%= pkg.name %>.min.js'
-        options: {
-          transform: ['coffeeify', 'uglifyify']
-          browserifyOptions: {
+            standalone: 'ScrollProxy'
             extensions: '.coffee'
           }
           banner: '/*<%= pkg.name %>@<%= pkg.version %>*/'
         }
       }
       dev: {
-        src: ['src/*.coffee']
-        dest: 'dev/<%= pkg.name %>.min.js'
+        src: ['src/*.coffee', 'dev/*.coffee']
+        dest: 'dev/<%= pkg.name %>.js'
         options: {
           transform: ['coffeeify']
           browserifyOptions: {
@@ -80,7 +102,7 @@ module.exports = (grunt) ->
         src: ['test/*.coffee']
         dest: 'test/testBundle.js'
         options: {
-          transform: ['coffeeify']
+          transform: ['browserify-coffee-coverage']
           browserifyOptions: {
             extensions: '.coffee'
             debug: true
@@ -89,38 +111,36 @@ module.exports = (grunt) ->
       }
     }
 
-    # Run tests using Mocha with Phantom.JS
-    mocha: {
+    # Run tests using Mocha locally
+    mochify: {
       test: {
         options: {
-          urls: [
-            'http://localhost:3000/test/index.html'
-          ]
-          reporter: 'Spec'
-          run: true
+          reporter: 'spec'
+          extension: '.coffee'
+          transform: 'coffeeify'
+          cover: true
         }
+        src: ['test/*.coffee']
       }
     }
 
     # Generate documentation with Codo
     codo: {
-      options: {
-        name: '<%= pkg.name %>'
-        output: './docs'
-        title: '<%= pkg.name %>\'s Documentation'
-      }
       app: {
         src: ['src/*.coffee']
+        options: {
+          name: '<%= pkg.name %>'
+          output: './docs'
+          title: '<%= pkg.name %>\'s Documentation'
+        }
       }
     }
 
-    # Clean all builds, get back to default state
+    # Clean all builds, get back to default state you were when cloning
     clean: [
-      'dev'
-      'docs'
+      'lib'
+      'dev/scroll-proxy.js'
       'test/testBundle.js'
-      '<%= pkg.name %>.js'
-      '<%= pkg.name %>.min.js'
     ]
 
     # Watch tasks to run while developing
@@ -132,9 +152,13 @@ module.exports = (grunt) ->
         files: ['src/*.coffee', 'Gruntfile.coffee']
         tasks: ['coffeelint']
       }
-      coffee: {
-        files: ['src/*.coffee']
-        tasks: ['coffee:dev']
+      browserifyDev: {
+        files: ['src/*.coffee', 'dev/*.coffee']
+        tasks: ['browserify:dev']
+      }
+      browserifyTest: {
+        files: ['src/*.coffee', 'test/*.coffee']
+        tasks: ['browserify:test']
       }
     }
 
@@ -142,13 +166,15 @@ module.exports = (grunt) ->
     connect: {
       server: {
         options: {
-          port: 3000
+          port: 8080
           base: '.'
         }
       }
     }
 
+    # TODO: Build nice demo first :)
     # Run http server on port 3000 to test samples
+    ###
     'http-server': {
       dev: {
         root: './demo/'
@@ -159,17 +185,21 @@ module.exports = (grunt) ->
         runInBackground: false
       }
     }
+    ###
 
-    # Run tests on Sauce Labs
-    'wct-test': {
-      remote: {
+    # Runs browser tests on Sauce Labs (only Circle CI must run it)
+    'saucelabs-mocha': {
+      all: {
         options: {
-          suites: ['test/']
-          remote: true
-          sauce: {
-            username: 'mkautzmann'
-            accessKey: '40457848-7820-4b70-872b-70e91a2806ab'
-          }
+          username: process.env.SAUCE_USERNAME
+          key: process.env.SAUCE_ACCESSKEY
+          urls: ['localhost:8080/test/index.html']
+          testname: 'scroll-proxy'
+          build: process.env.CIRCLE_BUILD_NUM
+          pollInterval: 5000
+          'max-duration': 500
+          maxRetries: 1
+          browsers: grunt.file.readJSON('browserSupport.json').browsers
         }
       }
     }
@@ -177,35 +207,45 @@ module.exports = (grunt) ->
 
   # Load grunt tasks
   grunt.loadNpmTasks('grunt-browserify')
+  grunt.loadNpmTasks('grunt-codo')
   grunt.loadNpmTasks('grunt-coffeelint')
   grunt.loadNpmTasks('grunt-contrib-clean')
+  grunt.loadNpmTasks('grunt-mochify')
+  grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-connect')
-  grunt.loadNpmTasks('grunt-codo')
   grunt.loadNpmTasks('grunt-contrib-uglify')
   grunt.loadNpmTasks('grunt-contrib-watch')
-  grunt.loadNpmTasks('grunt-http-server')
+  #grunt.loadNpmTasks('grunt-http-server')
   grunt.loadNpmTasks('grunt-mocha')
-  #grunt.loadNpmTasks('web-component-tester')
+  grunt.loadNpmTasks('grunt-saucelabs')
 
   # Set up the task aliases
   grunt.registerTask('lint', ['coffeelint:app', 'coffeelint:test'])
-  grunt.registerTask('compile', ['coffee:dev'])
   grunt.registerTask('renew', ['clean'])
   grunt.registerTask('docs', ['codo'])
-  grunt.registerTask('server', ['http-server:dev'])
-  grunt.registerTask('sauce', ['connect', 'wct-test'])
   grunt.registerTask('test', [
-    'coffeelint:test'
-    'browserify:test'
-    'connect'
-    'mocha'
-  ])
-  grunt.registerTask('dev', ['lint', 'test', 'compile', 'docs'])
-  grunt.registerTask('build', [
     'lint'
+    'browserify:test'
+    'mochify:test'
+  ])
+  grunt.registerTask('dev', [
     'test'
-    'coffee:dist'
-    'uglify:dist'
+    'browserify:dev'
     'docs'
   ])
+  grunt.registerTask('build', [
+    'test'
+    'coffee'
+    'uglify'
+    'browserify:standalone'
+    'docs'
+  ])
+  if process.env.CI
+    grunt.registerTask('ci', [
+      'lint'
+      'connect'
+      'test'
+      'browserify:test'
+      'saucelabs-mocha'
+    ])
   grunt.registerTask('default', ['build'])
