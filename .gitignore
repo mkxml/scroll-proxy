@@ -3,7 +3,10 @@
 Thumbs.db
 
 # Ignore node dependencies
-node_modules/
+node_modules
+
+# Ignore bower dependencies
+bower_components
 
 # Ignore npm files
 npm-debug.log
