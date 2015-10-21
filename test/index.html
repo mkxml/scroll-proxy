@@ -9,36 +9,33 @@
   <div id="mocha"></div>
   <script src="../bower_components/mocha/mocha.js"></script>
   <script>mocha.setup('bdd')</script>
-  <script src="testBundle.js" data-cover></script>
+  <script src="testBundle.js"></script>
   <script>
-    mocha.run()
-    if (navigator.userAgent.indexOf('PhantomJS') < 0) {
-      onload = function(){
-        var runner = mocha.run();
+    onload = function(){
+      var runner = mocha.run();
 
-        var failedTests = [];
-        runner.on('end', function(){
-          window.mochaResults = runner.stats;
-          window.mochaResults.reports = failedTests;
-        });
+      var failedTests = [];
+      runner.on('end', function(){
+        window.mochaResults = runner.stats;
+        window.mochaResults.reports = failedTests;
+      });
 
-        runner.on('fail', logFailure);
+      runner.on('fail', logFailure);
 
-        function logFailure(test, err){
+      function logFailure(test, err){
 
-          var flattenTitles = function(test){
-            var titles = [];
-            while (test.parent.title){
-              titles.push(test.parent.title);
-              test = test.parent;
-            }
-            return titles.reverse();
-          };
-
-          failedTests.push({name: test.title, result: false, message: err.message, stack: err.stack, titles: flattenTitles(test) });
+        var flattenTitles = function(test){
+          var titles = [];
+          while (test.parent.title){
+            titles.push(test.parent.title);
+            test = test.parent;
+          }
+          return titles.reverse();
         };
+
+        failedTests.push({name: test.title, result: false, message: err.message, stack: err.stack, titles: flattenTitles(test) });
       };
-    }
+    };
   </script>
 </body>
 </html>
