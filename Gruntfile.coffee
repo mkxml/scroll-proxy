@@ -195,7 +195,7 @@ module.exports = (grunt) ->
           key: process.env.SAUCE_ACCESSKEY
           urls: ['localhost:8080/test/index.html']
           testname: 'scroll-proxy'
-          build: process.env.CIRCLE_BUILD_NUM
+          build: 'build-ci' + process.env.CIRCLE_BUILD_NUM
           pollInterval: 5000
           'max-duration': 500
           maxRetries: 1
