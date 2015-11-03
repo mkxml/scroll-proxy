@@ -4,18 +4,15 @@
   Description:
     Build the project files, three main modes are available:
 
-    - grunt watch = while developing features or fixing bugs, keeps running
-      CoffeeScript compilation.
+    - grunt watch = useful while developing features or fixing bugs, keeps
+      running CoffeeScript compilation.
 
-    - grunt dev = Compiles everything with source maps, runs tests and
-      generate documentation and some working code on the dev folder. Nice
-      for debugging.
+    - grunt demo = Spawns a demo server where you can debug ScrollProxy.
 
     - grunt test = Runs local tests and coverage checks.
 
-    - grunt build = Does everything `grunt dev` does but for distribution
-      and also minifies code leaving both the standalone bundle and the module
-      ready to production in the dist folder.
+    - grunt build = Builds the whole project leaving the CommonJS modules on
+      lib folder and full packaged ready-to-use code on dist folder.
 
     Also, there are some individual grunt tasks, for more info run `grunt help`
 ###
@@ -54,28 +51,6 @@ module.exports = (grunt) ->
       }
     }
 
-    # Minifying the module
-    uglify: {
-      module: {
-        options: {
-          mangle: true
-          compress: {
-            booleans: true
-            conditionals: true
-            dead_code: true
-            drop_console: true
-            drop_debugger: true
-            loops: true
-            sequences: true
-          }
-        }
-        files: {
-          'lib/SUtil.js': 'lib/SUtil.js'
-          'lib/ScrollProxy.js': 'lib/ScrollProxy.js'
-        }
-      }
-    }
-
     # Browserify testing bundle and bundle for standalone lib
     browserify: {
       standalone: {
@@ -90,9 +65,9 @@ module.exports = (grunt) ->
           banner: '/*<%= pkg.name %>@<%= pkg.version %>*/'
         }
       }
-      dev: {
-        src: ['src/*.coffee', 'dev/*.coffee']
-        dest: 'dev/<%= pkg.name %>.js'
+      demo: {
+        src: ['src/*.coffee', 'demo/*.coffee']
+        dest: 'demo/<%= pkg.name %>.js'
         options: {
           transform: ['coffeeify']
           browserifyOptions: {
@@ -141,8 +116,10 @@ module.exports = (grunt) ->
 
     # Clean all builds, get back to default state you were when cloning
     clean: [
+      'dist'
+      'docs'
       'lib'
-      'dev/scroll-proxy.js'
+      'demo/scroll-proxy.js'
       'test/testBundle.js'
     ]
 
@@ -155,9 +132,9 @@ module.exports = (grunt) ->
         files: ['src/*.coffee', 'Gruntfile.coffee']
         tasks: ['coffeelint']
       }
-      browserifyDev: {
-        files: ['src/*.coffee', 'dev/*.coffee']
-        tasks: ['browserify:dev']
+      browserifyDemo: {
+        files: ['src/*.coffee', 'demo/*.coffee']
+        tasks: ['browserify:demo']
       }
       browserifyTest: {
         files: ['src/*.coffee', 'test/*.coffee']
@@ -172,6 +149,17 @@ module.exports = (grunt) ->
           port: 8080
           base: '.'
         }
+      }
+    }
+
+    # Run demo server and open demo page
+    'http-server': {
+      demo: {
+        root: './demo'
+        port: 3000
+        ext: 'html'
+        runInBackground: false
+        openBrowser: true
       }
     }
 
@@ -201,9 +189,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-mochify')
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-connect')
-  grunt.loadNpmTasks('grunt-contrib-uglify')
   grunt.loadNpmTasks('grunt-contrib-watch')
-  #grunt.loadNpmTasks('grunt-mocha')
+  grunt.loadNpmTasks('grunt-http-server')
   grunt.loadNpmTasks('grunt-saucelabs')
 
   # Set up the task aliases
@@ -215,15 +202,13 @@ module.exports = (grunt) ->
     'browserify:test'
     'mochify:test'
   ])
-  grunt.registerTask('dev', [
-    'test'
-    'browserify:dev'
-    'docs'
+  grunt.registerTask('demo', [
+    'browserify:demo'
+    'http-server'
   ])
   grunt.registerTask('build', [
     'test'
     'coffee'
-    'uglify'
     'browserify:standalone'
     'docs'
   ])
