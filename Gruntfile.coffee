@@ -7,8 +7,11 @@
     - grunt watch = while developing features or fixing bugs, keeps running
       CoffeeScript compilation.
 
-    - grunt dev = Compiles everything with source maps, runs tests and generate
-      documentation and some working code on the dev folder. Nice for debugging.
+    - grunt dev = Compiles everything with source maps, runs tests and
+      generate documentation and some working code on the dev folder. Nice
+      for debugging.
+
+    - grunt test = Runs local tests and coverage checks.
 
     - grunt build = Does everything `grunt dev` does but for distribution
       and also minifies code leaving both the standalone bundle and the module
@@ -77,7 +80,7 @@ module.exports = (grunt) ->
     browserify: {
       standalone: {
         src: ['src/*.coffee']
-        dest: 'dist/<%= pkg.name %>.standalone.js'
+        dest: 'dist/<%= pkg.name %>.min.js'
         options: {
           transform: ['coffeeify', 'uglifyify']
           browserifyOptions: {
@@ -172,21 +175,6 @@ module.exports = (grunt) ->
       }
     }
 
-    # TODO: Build nice demo first :)
-    # Run http server on port 3000 to test samples
-    ###
-    'http-server': {
-      dev: {
-        root: './demo/'
-        port: 3000
-        host: 'localhost'
-        showDir: true
-        ext: 'html'
-        runInBackground: false
-      }
-    }
-    ###
-
     # Runs browser tests on Sauce Labs (only Circle CI must run it)
     'saucelabs-mocha': {
       all: {
@@ -215,8 +203,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-connect')
   grunt.loadNpmTasks('grunt-contrib-uglify')
   grunt.loadNpmTasks('grunt-contrib-watch')
-  #grunt.loadNpmTasks('grunt-http-server')
-  grunt.loadNpmTasks('grunt-mocha')
+  #grunt.loadNpmTasks('grunt-mocha')
   grunt.loadNpmTasks('grunt-saucelabs')
 
   # Set up the task aliases

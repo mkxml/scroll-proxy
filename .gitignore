@@ -11,5 +11,14 @@ bower_components
 # Ignore npm files
 npm-debug.log
 
+# Ignore docs, generate locally
+docs
+
+# Ignore dev js
+dev/scroll-proxy.js
+
+# Ignore testBundle js
+test/testBundle.js
+
 # Ignore wallaby.js config file
 wallaby.js

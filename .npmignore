@@ -2,6 +2,7 @@
 Thumbs.db
 bower_components
 dev
+docs
 dist
 test
 .gitattributes

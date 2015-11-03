@@ -20,6 +20,7 @@
     "node_modules",
     "bower_components",
     "dev",
+    "docs",
     "test",
     "lib",
     "browserSupport.json",
