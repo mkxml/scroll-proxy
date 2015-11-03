@@ -11,14 +11,14 @@ bower_components
 # Ignore npm files
 npm-debug.log
 
-# Ignore docs, generate locally
+# Ignore test/debug tools and docs, generate locally if needed
 docs
-
-# Ignore dev js
-dev/scroll-proxy.js
-
-# Ignore testBundle js
+demo/scroll-proxy.js
 test/testBundle.js
 
-# Ignore wallaby.js config file
+# Ignore build files, you must build your own or use package management/CDN
+dist
+lib
+
+# Ignore wallaby.js config file, only some devs use it
 wallaby.js
