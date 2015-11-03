@@ -1,7 +1,8 @@
 .DS_Store
 Thumbs.db
 bower_components
-dev
+demo
+docs
 dist
 test
 .gitattributes

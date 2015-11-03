@@ -186,7 +186,7 @@ module.exports = class ScrollProxy
     if len is 0 then return null
     # Get the correct target anchor (HTML element)
     target = e.target.body or e.target
-    return ScrollProxy._getElement(target).proxy._performScroll(e)
+    return ScrollProxy._getElement(target)?.proxy._performScroll(e)
 
   ###
     Retrieves the current target and proxy for the given HTMLElement
@@ -245,7 +245,9 @@ module.exports = class ScrollProxy
     @return [Array] Targets removed
     @since 0.1.0
   ###
-  @clean: -> item.proxy.unregister() for item in ScrollProxy._targetList
+  @clean: ->
+    ScrollProxy.deactivate()
+    return ScrollProxy._targetList = []
 
   ###
     Update this instance rect information, updating x and y positions as well as
@@ -725,9 +727,13 @@ module.exports = class ScrollProxy
     @return [ScrollProxy] This instance
   ###
   unregister: ->
-    for item, i in ScrollProxy._targetList
-      if item? and item.target is @_target
-        SUtil.removeItemFromArray(ScrollProxy._targetList, i)
+    idx = ScrollProxy._targetList.length
+    if idx > 0
+      # Reverse loop here to avoid messing with the length cache
+      while idx--
+        if ScrollProxy._targetList[idx].proxy is this
+          SUtil.removeItemFromArray(ScrollProxy._targetList, idx)
+          break
     if ScrollProxy._targetList.length is 0 then ScrollProxy.deactivate()
     return this
 

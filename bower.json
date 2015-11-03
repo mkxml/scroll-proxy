@@ -5,7 +5,7 @@
     "Matheus Kautzmann <kautzmann5@gmail.com>"
   ],
   "description": "Modular proxy for the scroll event. Useful set of functions to help improve scroll performance",
-  "main": "dist/scroll-proxy.standalone.js",
+  "main": "dist/scroll-proxy.min.js",
   "moduleType": [],
   "keywords": [
     "scroll",
@@ -19,7 +19,8 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "dev",
+    "demo",
+    "docs",
     "test",
     "lib",
     "browserSupport.json",

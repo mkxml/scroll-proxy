@@ -28,7 +28,7 @@
     {
       "browserName": "safari",
       "platform": "OS X 10.11",
-      "version": "8.1"
+      "version": "9.0"
     },
     {
       "browserName": "chrome",
@@ -43,13 +43,6 @@
       "platform": "OS X 10.10",
       "version": "8.4",
       "deviceName": "iPhone 4s",
-      "deviceOrientation": "portrait"
-    },
-    {
-      "browserName": "iphone",
-      "platform": "OS X 10.10",
-      "version": "9.0",
-      "deviceName": "iPhone 6",
       "deviceOrientation": "portrait"
     },
     {
