@@ -10,3 +10,6 @@ bower_components
 
 # Ignore npm files
 npm-debug.log
+
+# Ignore wallaby.js config file
+wallaby.js
