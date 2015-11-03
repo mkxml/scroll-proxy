@@ -213,6 +213,16 @@ describe('ScrollProxy', ->
       expect(item).to.be.null
     )
 
+    it('should return undefined when trying a unregistered target', ->
+      sp = new ScrollProxy()
+      e = {
+        target: document.createElement('div')
+      }
+      item = ScrollProxy._handleScroll(e)
+      expect(ScrollProxy._targetList.length).to.eql(1)
+      expect(item).to.eql(undefined)
+    )
+
     it('should return the target when it is available and with events', ->
       spy = sinon.spy()
       sp = new ScrollProxy(el)
