@@ -46,13 +46,6 @@
       "deviceOrientation": "portrait"
     },
     {
-      "browserName": "iphone",
-      "platform": "OS X 10.10",
-      "version": "9.0",
-      "deviceName": "iPhone 6",
-      "deviceOrientation": "portrait"
-    },
-    {
       "browserName": "android",
       "platform": "Linux",
       "version": "4.4",
