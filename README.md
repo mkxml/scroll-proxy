@@ -1,4 +1,4 @@
-# <a href="#" id="top"></a> scroll-proxy
+# <a href="#" id="top"></a>scroll-proxy
 
 <img src="https://cldup.com/DRQ7JPq9se.png" title="scroll-proxy banner" style="border: 0; max-width: 1200px; width: 100%;">
 
@@ -10,10 +10,10 @@
 
   - [Goal](#goal)
   - [Install](#install)
-    - [A) I'm using NPM and browserify :sunglasses:](#optionA)
-    - [B) I love Bower! :kissing_closed_eyes:](#optionB)
-    - [C) I'm not into package management... :worried:](#optionC)
-    - [D) I don't even want to download it, haha. :smirk:](#optionD)
+    - [A) I'm using NPM and browserify](#optionA)
+    - [B) I love Bower!](#optionB)
+    - [C) I'm not into package management...](#optionC)
+    - [D) I don't even want to download it, haha](#optionD)
   - [Usage](#usage)
     - [How it works](#how)
     - [Setup](#setup)
@@ -26,7 +26,7 @@
   - [Browser support](#support)
   - [License](#license)
 
-## <a href="#" id="goal"></a> :scroll: Goal
+## <a href="#" id="goal"></a>:scroll: Goal
 
 This package is designed to help dealing with the scroll event in the **browser** in the most smoothly way possible.
 
@@ -36,33 +36,33 @@ It applies some techniques already frequently used by web developers such as **f
 
 The project's main focus is to help developers achieve great scroll performance in their apps while still being able to implement stuff like **scroll-based animations**, **sticky headers** and **infinite scrolling**.
 
-## <a href="#" id="install"></a> :zap: Install
+## <a href="#" id="install"></a>:zap: Install
 
 The installation process is pretty straight-forward. Just go to the root folder of your project and follow **one** of the 4 following options:
 
-##### <a href="#" id="optionA"></a> A) I'm using NPM and browserify :sunglasses:
+##### <a href="#" id="optionA"></a>A) I'm using NPM and browserify :sunglasses:
 
 If you use `browserify` and NPM you may install with this command:
 
 `npm install scroll-proxy --save`
 
-##### <a href="#" id="optionB"></a> B) I love  Bower! :kissing_closed_eyes:
+##### <a href="#" id="optionB"></a>B) I love  Bower! :kissing_closed_eyes:
 
 Bower is another package manager supported. To install, just run:
 
 `bower install scroll-proxy --save`
 
-##### <a href="#" id="optionC"></a> C) I'm not into package management... :worried:
+##### <a href="#" id="optionC"></a>C) I'm not into package management... :worried:
 
 No problem. Just [download the ZIP](), unzip it and use it as any other JS script.
 
-##### <a href="#" id="optionD"></a> D) I don't even want to download it, haha. :smirk:
+##### <a href="#" id="optionD"></a>D) I don't even want to download it, haha. :smirk:
 
 You don't have to. You may use it directly via one of the [CDN providers]().
 
-## <a href="#" id="usage"></a> :beginner: Usage
+## <a href="#" id="usage"></a>:beginner: Usage
 
-### <a href="#" id="how"></a> How it works
+### <a href="#" id="how"></a>How it works
 
 One of the biggest concerns when developing `scroll-proxy` is its interoperability with other libs and frameworks.
 
@@ -74,7 +74,7 @@ The coolest part of the lib is the event handling, you can attach as many events
 
 Please setup the lib and check for yourself.
 
-### <a href="#" id="setup"></a> Setup
+### <a href="#" id="setup"></a>Setup
 
 Setting up the library is simple and easy.
 
@@ -103,7 +103,7 @@ The CommonJS module version needs you to `require` ScrollProxy before using it l
 var ScrollProxy = require("scroll-proxy");
 ```
 
-### <a href="#" id="on"></a> Registering scroll events
+### <a href="#" id="on"></a>Registering scroll events
 
 OK, ScrollProxy's set up. Now let's make some cool stuff.
 
@@ -239,7 +239,7 @@ s.on('visible', function() {
 }, square);
 ```
 
-### <a href="#" id="metadata"></a> Getting metadata
+### <a href="#" id="metadata"></a>Getting metadata
 
 `scroll-proxy` also delivers current information about the scroll area.
 
@@ -266,7 +266,7 @@ s.on('scroll', function() {
 });
 ```
 
-### <a href="#" id="off"></a> Getting rid of unused events
+### <a href="#" id="off"></a>Getting rid of unused events
 
 If you want to remove a event listener created with `on` or cancel an `once` event before it is even fired you can just use `off`.
 
@@ -279,7 +279,7 @@ s.on('scroll', function() {
 s.off('scroll'); // No more YAY! logging
 ```
 
-### <a href="#" id="unregistering"></a> Unregistering the `scroll-proxy` instances
+### <a href="#" id="unregistering"></a>Unregistering the `scroll-proxy` instances
 
 When you don't want an instance of `scroll-proxy` around anymore you should call `unregister` before losing the variable pointer. That way you assure the memory is clean and the events are released.
 
@@ -331,7 +331,7 @@ ScrollProxy.clean();
 // Now it will stop logging and everything is fine again
 ```
 
-### <a href="#" id="animations"></a> Dealing with animations
+### <a href="#" id="animations"></a>Dealing with animations
 
 `scroll-proxy` can be a great partner in your quest for 60FPS animations!
 
@@ -361,11 +361,11 @@ Notice that it applies a little delay between the scroll stop and the animation 
 s.setHoverDelay(100);
 ```
 
-### <a href="#" id="other"></a> Other great functionality
+### <a href="#" id="other"></a>Other great functionality
 
 There are some other great features in the lib, check the [wiki](https://github.com/mkautzmann/scroll-proxy/wiki) for more information.
 
-## <a href="#" id="support"></a> Browser support
+## <a href="#" id="support"></a>Browser support
 
 This library works with most modern browsers. Some features like the animation toggling require support for the css [pointer-events](https://developer.mozilla.org/pt-BR/docs/Web/CSS/pointer-events) spec.
 
@@ -379,7 +379,7 @@ Theoretical support should include the following browsers:
 
 You may get it to work on older browsers as well but some features may not function properly. The table above only states fully supported browsers.
 
-## <a href="#" id="license"></a> License
+## <a href="#" id="license"></a>License
 
 [MIT License](LICENSE) © Matheus Kautzmann
 
