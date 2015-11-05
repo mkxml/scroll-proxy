@@ -1,8 +1,8 @@
 {
   "name": "scroll-proxy",
   "version": "0.1.0",
-  "description": "Modular proxy for the scroll event. Useful set of functions to help improve scroll performance.",
-  "main": "lib/ScrollProxy.js",
+  "description": "Easy scroll handling in the browser. Zero dependencies. ~2kb gzipped",
+  "main": "dist/scroll-proxy.min.js",
   "scripts": {
     "install": "bower install",
     "test": "grunt test",
@@ -30,7 +30,6 @@
     "browserify": "~11.2.0",
     "browserify-coffee-coverage": "~1.0.2",
     "chai": "~3.3.0",
-    "coffee-script": "~1.10.0",
     "coffeeify": "~1.1.0",
     "coffeelint": "~1.13.0",
     "coveralls": "~2.11.4",
@@ -40,7 +39,6 @@
     "grunt-codo": "~0.2.0",
     "grunt-coffeelint": "~0.0.13",
     "grunt-contrib-clean": "~0.6.0",
-    "grunt-contrib-coffee": "~0.13.0",
     "grunt-contrib-connect": "~0.11.2",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-http-server": "~1.13.0",

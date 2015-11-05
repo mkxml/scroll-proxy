@@ -35,6 +35,12 @@ Code should be written in CoffeeScript and should follow the strict version of [
 
 Also make sure your editor supports [editorconfig](http://editorconfig.org/) and respects the rules in the `.editorconfig` file.
 
+#### Testing the code
+
+We try to maintain full test coverage, so if you change the API substantially please include tests according to the current pattern.
+
+The `grunt test` command will actually inform you if your test coverage is acceptable before you even submit the PR.
+
 ### Submitting the PR
 
 After writing your change you should first run tests in your code with `npm test` to see if everything is fine: following coding style, passing tests and so on.

@@ -38,20 +38,7 @@ module.exports = (grunt) ->
       }
     }
 
-    # Compiles coffee for module distribution
-    coffee: {
-      module: {
-        options: {
-          bare: true
-        }
-        files: {
-          'lib/SUtil.js': 'src/SUtil.coffee'
-          'lib/ScrollProxy.js': 'src/ScrollProxy.coffee'
-        }
-      }
-    }
-
-    # Browserify testing bundle and bundle for standalone lib
+    # Browserify bundles
     browserify: {
       standalone: {
         src: ['src/*.coffee']
@@ -118,9 +105,10 @@ module.exports = (grunt) ->
     clean: [
       'dist'
       'docs'
-      'lib'
       'demo/scroll-proxy.js'
       'test/testBundle.js'
+      'bower_components'
+      'node_modules'
     ]
 
     # Watch tasks to run while developing
@@ -187,7 +175,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-coffeelint')
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-mochify')
-  grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-connect')
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-http-server')
@@ -207,7 +194,6 @@ module.exports = (grunt) ->
   ])
   grunt.registerTask('build', [
     'test'
-    'coffee'
     'browserify:standalone'
     'docs'
   ])
