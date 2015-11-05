@@ -28,7 +28,7 @@
 
 ## <a href="#" id="goal"></a>:scroll: Goal
 
-This package is designed to help dealing with the scroll event in the **browser** in the most smoothly way possible.
+This package is designed to help dealing with the scroll event in the **browser** in the smoothest way possible.
 
 Yes, web browsers already deliver ways to listen for the scroll event and they work really well. What `scroll-proxy` does is proxy the calls from you to the native scroll event and the other way around, doing some transformations in the process.
 
@@ -54,7 +54,7 @@ Bower is another package manager supported. To install, just run:
 
 ##### <a href="#" id="optionC"></a>C) I'm not into package management... :worried:
 
-No problem. Just [download the ZIP](), unzip it and use it as any other JS script.
+No problem. Just [download the ZIP](https://github.com/mkautzmann/scroll-proxy/archive/master.zip), unzip it and use it! The JS file is inside the `dist` folder.
 
 ##### <a href="#" id="optionD"></a>D) I don't even want to download it, haha. :smirk:
 
