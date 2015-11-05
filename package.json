@@ -4,7 +4,6 @@
   "description": "Easy scroll handling in the browser. Zero dependencies. ~2kb gzipped",
   "main": "dist/scroll-proxy.min.js",
   "scripts": {
-    "install": "bower install",
     "test": "grunt test",
     "coverage": "node_modules/mocha-phantomjs/bin/mocha-phantomjs -R node_modules/mocha-lcov-reporter/lib/lcov.js test/index.html | sed -n '1!p' | sed 's,SF:,SF:src/,' | node_modules/coveralls/bin/coveralls.js"
   },

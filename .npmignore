@@ -3,11 +3,11 @@ Thumbs.db
 bower_components
 demo
 docs
-dist
 test
 .gitattributes
 .gitignore
 .editorconfig
+bower.json
 browserSupport.json
 circle.yml
 coffeelint.json
