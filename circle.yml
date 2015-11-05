@@ -1,3 +1,7 @@
+general:
+  branches:
+    ignore:
+      - gh-pages # Ignore gh-pages from CI builds
 machine:
   node:
     version: 4.1.0
@@ -8,5 +12,10 @@ dependencies:
     - SAUCE_CONNECT_DOWNLOAD_ON_INSTALL=true npm install
 test:
   override:
-    - grunt ci
-    - npm run coverage
+    - >
+      if [ "$CIRCLE_BRANCH" = "master" ]; then
+        grunt ci;
+        npm run coverage;
+      else
+        grunt test;
+      fi

@@ -199,7 +199,6 @@ module.exports = (grunt) ->
   grunt.registerTask('docs', ['codo'])
   grunt.registerTask('test', [
     'lint'
-    'browserify:test'
     'mochify:test'
   ])
   grunt.registerTask('demo', [
@@ -214,10 +213,9 @@ module.exports = (grunt) ->
   ])
   if process.env.CI
     grunt.registerTask('ci', [
-      'lint'
-      'connect'
       'test'
       'browserify:test'
+      'connect'
       'saucelabs-mocha'
     ])
   grunt.registerTask('default', ['build'])
