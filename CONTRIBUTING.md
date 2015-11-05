@@ -17,14 +17,17 @@ Pull requests are great if you want to contribute with code or documentation. To
 
 Make sure you have both [node](https://nodejs.org/) and [npm](https://www.npmjs.com/) (it comes with node) installed.
 
-We rely heavily on [grunt](http://gruntjs.com/), please install it before proceeding if you don't already have it by running this command:
+We rely heavily on [grunt](http://gruntjs.com/) and [bower](http://bower.io/), please install them before proceeding if you don't already have it by running the following commands:
 
 `npm install -g grunt-cli`
+
+`npm install -g bower`
 
 To build the project follow the steps on your terminal of choice:
 
  1. Clone the project and `cd` to the root folder.
  2. Run `npm install`
+ 3. Run `bower install`
  3. Run `grunt build`
 
 And there you go, you have a working version of `scroll-proxy` in the `dist` folder, the CommonJS libs in the `lib` folder and the full documentation in the `docs` folder.
