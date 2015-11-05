@@ -419,7 +419,7 @@ module.exports = class ScrollProxy
     if evt is ScrollProxy.OFFSET_X
       return @_createEvent(evt, =>
         if @x is @_target[@_targetX]
-          return @_updateViewportInfo()
+          return
         else
           @_updateViewportInfo()
         if SUtil.isPositiveNumber(offset) and @x < offset then return
