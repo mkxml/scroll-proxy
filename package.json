@@ -1,6 +1,6 @@
 {
   "name": "scroll-proxy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Easy scroll handling in the browser. Zero dependencies. ~2kb gzipped",
   "main": "dist/scroll-proxy.min.js",
   "scripts": {
