@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>scroll-proxy by mkautzmann</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">scroll-proxy</h1>
+      <h2 class="project-tagline">Easy scroll handling. Zero dependencies. Just 2kb.</h2>
+      <a href="https://github.com/mkautzmann/scroll-proxy" class="btn">View on GitHub</a>
+      <a href="https://github.com/mkautzmann/scroll-proxy/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/mkautzmann/scroll-proxy/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h2>
+<a id="goal" class="anchor" href="#goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Goal</h2>
+
+<p>This package is designed to help dealing with the scroll event in the <strong>browser</strong> in the most smoothly way possible.</p>
+
+<p>Yes, web browsers already deliver ways to listen for the scroll event and they work really well. What <code>scroll-proxy</code> does is proxy the calls from you to the native scroll event and the other way around, doing some transformations in the process.</p>
+
+<p>It applies some techniques already frequently used by web developers such as <strong>function throttling</strong>, <strong>animation toggling</strong> and a few others on <strong>scroll</strong>-related events. Delivering a small library one can just download and use.</p>
+
+<p>The project's main focus is to help developers achieve great scroll performance in their apps while still being able to implement stuff like <strong>scroll-based animations</strong>, <strong>sticky headers</strong> and <strong>infinite scrolling</strong>.</p>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<p>The installation process is pretty straight-forward.</p>
+
+<p>You can get it on npm:</p>
+
+<p><code>npm install scroll-proxy --save</code></p>
+
+<p>Or bower:</p>
+
+<p><code>bower install scroll-proxy --save</code></p>
+
+<p>If you are not into package management there is also the option of <a href="">direct download</a>, after unzipping the JS file will be in the <code>dist</code> folder.</p>
+
+<p>Don't want to download at all? No problem. Just get it from one of the <a href="">CDN providers</a>.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="how-it-works" class="anchor" href="#how-it-works" aria-hidden="true"><span class="octicon octicon-link"></span></a>How it works</h3>
+
+<p>One of the biggest concerns when developing <code>scroll-proxy</code> is its interoperability with other libs and frameworks.</p>
+
+<p>So we decided not to change the native scroll handling. Instead, we create a wrapper that can handle everything the native can do and more.</p>
+
+<p>This way we avoid breaking any other lib that may rely on the native scroll event.</p>
+
+<p>The coolest part of the lib is the event handling, you can attach as many events you like but it will only attach one listener to the native <code>scroll</code> event in the browser. This practice is often called <a href="https://davidwalsh.name/event-delegate">event delegation</a>.</p>
+
+<p>Please setup the lib and check for yourself.</p>
+
+<h3>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h3>
+
+<p>Setting up the library is simple and easy.</p>
+
+<p>Once you've installed it and properly added it to your document via a <code>script</code> tag you just have to instantiate a new <code>ScrollProxy</code> object.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> myScroll <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>();</pre></div>
+
+<p>You just did it!</p>
+
+<p>Notice that you didn't pass any arguments to the <code>ScrollProxy</code> constructor. By default, ScrollProxy will always <strong>attach</strong> to <code>document.body</code>. It means it will report actions when the user scrolls the <strong>page</strong>.</p>
+
+<p>If you want to get updates when the user scrolls inside some specific <code>HTMLElement</code> you must pass it to the constructor:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> myDiv <span class="pl-k">=</span> <span class="pl-c1">document</span>.querySelector(<span class="pl-s"><span class="pl-pds">'</span>.scrollable<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> myDivScroll <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(myDiv);</pre></div>
+
+<h4>
+<a id="note-for-commonjsbrowserify-users" class="anchor" href="#note-for-commonjsbrowserify-users" aria-hidden="true"><span class="octicon octicon-link"></span></a>Note for CommonJS/browserify users</h4>
+
+<p>The CommonJS module version needs you to <code>require</code> ScrollProxy before using it like above.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> ScrollProxy <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>scroll-proxy<span class="pl-pds">"</span></span>);</pre></div>
+
+<h3>
+<a id="registering-scroll-events" class="anchor" href="#registering-scroll-events" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="#" id="on"></a>Registering scroll events</h3>
+
+<p>OK, ScrollProxy's set up. Now let's make some cool stuff.</p>
+
+<p>The first thing you might want to do is to get updates whenever the user scrolls the page.</p>
+
+<p>Usually, using just browsers APIs and vanilla JS, you could do that like this:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">window</span>.addEventListener(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>YAY, I'm scrolling!<span class="pl-pds">"</span></span>);
+}, <span class="pl-c1">false</span>);</pre></div>
+
+<p>And that would work great.</p>
+
+<p>But note that it bombs your console with a lot of logs. That's because each movement on the scroll area causes one <code>scroll</code> event to fire.</p>
+
+<p>That could be fine for logging as it's pretty fast but imagine doing complex calculations or animating stuff based on scroll position. That would be really slow and certainly laggy.</p>
+
+<h4>
+<a id="here-comes-scroll-proxy-to-the-rescue" class="anchor" href="#here-comes-scroll-proxy-to-the-rescue" aria-hidden="true"><span class="octicon octicon-link"></span></a>Here comes <code>scroll-proxy</code> to the rescue!</h4>
+
+<p>In <code>scroll-proxy</code> registering an event is as easy as calling the <code>on</code> function passing the name of the event and the callback function.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>() <span class="pl-c">// It defaults to document.body, just as we want it</span>
+s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>YAY, I'm scrolling!<span class="pl-pds">"</span></span>);
+});</pre></div>
+
+<p>Now your <code>scroll</code> event belongs to ScrollProxy, it will automatically throttle the event calls with a 250ms delay by default.</p>
+
+<p>That's great for most use cases but you can actually change it on the fly! Take a look:</p>
+
+<div class="highlight highlight-source-js"><pre>s.setScrollDelay(<span class="pl-c1">100</span>);</pre></div>
+
+<p>Now subsequent events are respecting a 100ms delay. Easy, huh?</p>
+
+<p>You could also just opt to get just a ping when the scroll event happened instead of keep monitoring, the function you are looking for is <code>once</code>. It is like <code>on</code> but, as the name implies, only fires once.</p>
+
+<div class="highlight highlight-source-js"><pre>s.once(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>I have just scrolled<span class="pl-pds">"</span></span>);
+})</pre></div>
+
+<p>Take your time to compare both vanilla and ScrollProxy implementations and see the difference. It certainly helps tame the frenzy <code>scroll</code> event calls.</p>
+
+<p>Fell free to the behavior using your browser inspector right here in this page. We already have a ScrollProxy instance setup in <code>window.myScroll</code>.</p>
+
+<h4>
+<a id="scrollproxys-custom-events" class="anchor" href="#scrollproxys-custom-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>ScrollProxy's custom events</h4>
+
+<p>Registering the <code>scroll</code> event is not the only thing ScrollProxy can do, actually it has a bunch of other cool events you can listen with the built in <code>on</code> and <code>once</code> functions.</p>
+
+<p>The full list of events you can rely on:</p>
+
+<ul>
+<li><code>scroll</code></li>
+<li><code>offsetX</code></li>
+<li><code>offsetY</code></li>
+<li><code>top</code></li>
+<li><code>bottom</code></li>
+<li><code>left</code></li>
+<li><code>right</code></li>
+<li><code>visible</code></li>
+<li><code>invisible</code></li>
+</ul>
+
+<h4>
+<a id="special-events" class="anchor" href="#special-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Special events</h4>
+
+<p>Some events accept a third argument in the <code>on</code> and <code>once</code> functions. The presence of this third argument and it's value modify the event handling.</p>
+
+<p><strong>The offset events</strong></p>
+
+<p>The <code>offsetX</code> and <code>offsetY</code> accept a third argument indicating a offset for <code>scroll-proxy</code> it to consider when firing the event. Take a look:</p>
+
+<p>Example:</p>
+
+<p>INSERT EXAMPLE HERE</p>
+
+<p>Code:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">THE</span> <span class="pl-c1">CODE</span></pre></div>
+
+<p>You can also pass the third argument:</p>
+
+<p>INSERT EXAMPLE HERE</p>
+
+<p>Code:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">THE</span> <span class="pl-c1">CODE</span></pre></div>
+
+<p>Note the presence of the optional third argument on the second example. It indicates an <strong>offset</strong> to respect. The same logic applies to the <code>offsetY</code> event as well.</p>
+
+<p><strong>The top, bottom, left and right events</strong></p>
+
+<p>These kind of events are usually used to determine if the user reached some of the borders of the scroll area. The third argument is useful here when you want to tell <code>scroll-proxy</code> to fire the event earlier than normal.</p>
+
+<p>Let's say you want to implement infinite scrolling. You could just load new stuff when the user reaches the bottom of the scroll area, right? Yes, this would work, but wouldn't it be nicer if you could actually load the content <strong>before</strong> the user notices any loading?</p>
+
+<p>For these types of use case the third argument comes handy.</p>
+
+<p>Sometimes you want to actually get notified when the scroll area reaches the bottom.</p>
+
+<p>Example:</p>
+
+<p>INSERT EXAMPLE HERE</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
+
+<p>And on other times you may want to get notified earlier. You can do that by passing the third argument.</p>
+
+<p>Example:</p>
+
+<p>INSERT EXAMPLE HERE</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
+
+<p><strong>The visible and invisible events</strong></p>
+
+<p>These are very special events that have limited use cases but sometimes are very welcome.</p>
+
+<p>Both events will only work if the third argument is given. Yes, the third argument is not optional when using either <code>visible</code> or <code>invisible</code> events.</p>
+
+<p>That's because the events need to check if the element passed in the third argument is visible in the scroll area.</p>
+
+<p>There's another catch: <strong>the element to be checked must be a direct child</strong> of the scroll area <code>scroll-proxy</code> is attached to.</p>
+
+<p>Example of detecting visible objects:</p>
+
+<p>INSERT EXAMPLE HERE</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
+
+<p>Example of detecting invisible objects:</p>
+
+<p>INSERT EXAMPLE HERE</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
+
+<h3>
+<a id="getting-metadata" class="anchor" href="#getting-metadata" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting metadata</h3>
+
+<p><code>scroll-proxy</code> also delivers current information about the scroll area.</p>
+
+<p>You can fetch info about the x and positions, the width and height of the scroll element and also the width and height of the scroll area.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// Consider a window of 800x600 with a 2000x2000 div inside</span>
+<span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>();
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(s.<span class="pl-c1">x</span>); <span class="pl-c">// Will log 0</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(s.<span class="pl-c1">y</span>); <span class="pl-c">// Will log 0</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(s.<span class="pl-c1">width</span>); <span class="pl-c">// Will log 800</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(s.<span class="pl-c1">height</span>); <span class="pl-c">// Will log 600</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(s.scrollWidth); <span class="pl-c">// Will log 2000</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(s.scrollHeight); <span class="pl-c">// Will log 2000</span></pre></div>
+
+<p>All the info you see above is updated realtime if you registered at least one event with <code>on</code>. In fact if you want to use these kind of info inside the event callback you could do like this:</p>
+
+<p>Example:</p>
+
+<p>INSERT EXAMPLE HERE</p>
+
+<p>Code:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
+
+<h3>
+<a id="getting-rid-of-unused-events" class="anchor" href="#getting-rid-of-unused-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting rid of unused events</h3>
+
+<p>If you want to remove a event listener created with <code>on</code> or cancel an <code>once</code> event before it is even fired you can just use <code>off</code>.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>();
+s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>YAY!<span class="pl-pds">'</span></span>);
+});
+
+s.off(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">'</span></span>); <span class="pl-c">// No more YAY! logging</span></pre></div>
+
+<h3>
+<a id="unregistering-the-scroll-proxy-instances" class="anchor" href="#unregistering-the-scroll-proxy-instances" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unregistering the <code>scroll-proxy</code> instances</h3>
+
+<p>When you don't want an instance of <code>scroll-proxy</code> around anymore you should call <code>unregister</code> before losing the variable pointer. That way you assure the memory is clean and the events are released.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>();
+s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Scrolling<span class="pl-pds">'</span></span>);
+});
+
+<span class="pl-c">// Unregistering. Stop event reports and clean stuff</span>
+s.unregister(); <span class="pl-c">// Stopped logging</span>
+
+<span class="pl-k">delete</span> s; <span class="pl-c">// Clear pointer, everything OK</span></pre></div>
+
+<p>The <code>register</code> function can recover unregistered instances and restore all the event handlers.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>();
+s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Scrolling<span class="pl-pds">'</span></span>);
+});
+
+<span class="pl-c">// Unregistering stop event reports</span>
+s.unregister(); <span class="pl-c">// Stopped logging</span>
+
+s.register(); <span class="pl-c">// Logging again on scroll</span></pre></div>
+
+<p><strong>Tip!</strong> If you already lost the variable pointing to the <code>scroll-proxy</code> instance you can just call <code>ScrollProxy.clean()</code> and get rid of all the attachments.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(); <span class="pl-c">// Attaching ScrollProxy to document.body</span>
+
+<span class="pl-c">// Getting scroll events</span>
+s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Scrolling...<span class="pl-pds">'</span></span>);
+});
+
+<span class="pl-k">delete</span> s; <span class="pl-c">// Remove s reference</span>
+
+<span class="pl-c">// Still getting 'Scrolling...' on scroll, because s.unregister() wasn't called</span>
+
+<span class="pl-c">// Can't s.unregister() now because it's undefined :(</span>
+
+<span class="pl-c">// So clean everything with ScrollProxy.clean()! :)</span>
+ScrollProxy.clean();
+
+<span class="pl-c">// Now it will stop logging and everything is fine again</span></pre></div>
+
+<h3>
+<a id="dealing-with-animations" class="anchor" href="#dealing-with-animations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dealing with animations</h3>
+
+<p><code>scroll-proxy</code> can be a great partner in your quest for 60FPS animations!</p>
+
+<p>The first thing you need to know is that by using the custom <code>scroll</code> event you are already helping your websites performance. As you read earlier it throttles the event firing and all you need to do is select a proper <strong>delay</strong> using <code>setScrollDelay</code>.</p>
+
+<p>But, that's not all! There is another trick we built in the library: <strong>animation toggling</strong>. Yes, if you have a long page with a lot of hover animations you should be aware that scrolling that page may result in a janky experience.</p>
+
+<p>To solve that you'll want to use the <code>disableHoverOnScroll</code> method. It will disable all hover animations inside the scroll area when the user is scrolling, resulting in a much better experience.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>();
+s.disableHoverOnScroll();</pre></div>
+
+<p>That's it! Don't worry, all the animations will come back to life once the user stops scrolling. It's all possible thanks to the <a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS/pointer-events">pointer-events</a> spec.</p>
+
+<p>If you need to enable animations on scroll again for some reason you can do that:</p>
+
+<div class="highlight highlight-source-js"><pre>s.enableHoverOnScroll();</pre></div>
+
+<p>Notice that it applies a little delay between the scroll stop and the animation enabling, if you want to change that delay use the <code>setHoverDelay</code> method.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// From now on, animations will resume after a 100ms delay after the scroll stop</span>
+s.setHoverDelay(<span class="pl-c1">100</span>);</pre></div>
+
+<h4>
+<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo</h4>
+
+<p>Try pressing the following button, it will toggle the hover animations on this very page. Then try scrolling over buttons to see if they react or not.</p>
+
+<p>INSERT DEMO BUTTON HERE</p>
+
+<h3>
+<a id="other-great-functionality" class="anchor" href="#other-great-functionality" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other great functionality</h3>
+
+<p>There are some other great features in the lib, check the <a href="https://github.com/mkautzmann/scroll-proxy/wiki">wiki</a> for more information.</p>
+
+<h2>
+<a id="browser-support" class="anchor" href="#browser-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser support</h2>
+
+<p>This library works with most modern browsers. Some features like the animation toggling require support for the css <a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS/pointer-events">pointer-events</a> spec.</p>
+
+<p>We test practical support in a handful of browsers over SauceLabs, the support matrix in on the <a href="#top">top of this file</a>.</p>
+
+<p>Theoretical support should include the following browsers:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/chrome/chrome_64x64.png" width="32px" height="32px"></th>
+<th align="center"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/internet-explorer/internet-explorer_64x64.png" width="32px" height="32px"></th>
+<th align="center"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/firefox/firefox_64x64.png" width="32px" height="32px"></th>
+<th align="center"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/opera/opera_64x64.png" width="32px" height="32px"></th>
+<th align="center"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/safari/safari_64x64.png" width="32px" height="32px"></th>
+<th align="center"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/edge/edge_64x64.png" width="32px" height="32px"></th>
+<th align="center">Android</th>
+<th align="center">iOS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">40+</td>
+<td align="center">11+</td>
+<td align="center">40+</td>
+<td align="center">29+</td>
+<td align="center">8+</td>
+<td align="center">12+</td>
+<td align="center">4.0+</td>
+<td align="center">8+</td>
+</tr>
+</tbody>
+</table>
+
+<p>You may get it to work on older browsers as well but some features may not function properly. The table above only states fully supported browsers.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p><a href="LICENSE">MIT License</a> © Matheus Kautzmann</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/mkautzmann/scroll-proxy">scroll-proxy</a> is maintained by <a href="https://github.com/mkautzmann">mkautzmann</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
