@@ -376,14 +376,15 @@ module.exports = class ScrollProxy
       s._createEvent('scroll', -> null, 250) # setting delay of 250ms
     @param [String] evt The event name to register
     @param [Function] callback the function to be called when event is fired
+    @param [Function] origin the original function passed, `off` searches for it
     @param [Number] delay Time to wait in milliseconds
     @return [Object] The event just registered
-    @since 0.1.0
+    @since 0.2.0
     @private
   ###
-  _createEvent: (evt, callback, delay) ->
+  _createEvent: (evt, callback, origin, delay) ->
     fn = @_throttleScroll(callback, delay)
-    return @_events.push({type: evt, fn: fn.bind(this), timeout: null})
+    return @_events.push({type: evt, fn: fn, origin: origin, timeout: null})
 
   ###
     Creates a scroll event
@@ -392,16 +393,17 @@ module.exports = class ScrollProxy
       s._createScrollEvent('scroll', -> null, 250) # setting delay of 250ms
     @param [String] evt The event name to register (**scroll**)
     @param [Function] callback the function to be called when event is fired
+    @param [Function] origin the original function passed, `off` searches for it
     @param [Number] delay Time to wait in milliseconds
     @return [Object] The event just registered
-    @since 0.1.0
+    @since 0.2.0
     @private
   ###
-  _createScrollEvent: (evt, callback, delay) ->
+  _createScrollEvent: (evt, callback, origin = callback, delay) ->
     return @_createEvent(evt, =>
       @_updateViewportInfo()
       return SUtil.reportChange(callback, this, @scrollData)
-    , delay)
+    , origin, delay)
 
   ###
     Creates a offset event
@@ -412,7 +414,7 @@ module.exports = class ScrollProxy
     @param [Function] callback the function to be called when event is fired
     @param [Number] offset Offset to check for (0 is default)
     @return [Object] The event just registered
-    @since 0.1.0
+    @since 0.2.0
     @private
   ###
   _createOffsetEvent: (evt, callback, offset = 0) ->
@@ -425,7 +427,7 @@ module.exports = class ScrollProxy
         if SUtil.isPositiveNumber(offset) and @x < offset then return
         if SUtil.isNegativeNumber(offset) and @x > Math.abs(offset) then return
         return SUtil.reportChange(callback, this, @scrollData)
-      )
+      , callback)
     else
       return @_createEvent(evt, =>
         if @y is @_target[@_targetY]
@@ -435,7 +437,7 @@ module.exports = class ScrollProxy
         if SUtil.isPositiveNumber(offset) and @y < offset then return
         if SUtil.isNegativeNumber(offset) and @y > Math.abs(offset) then return
         return SUtil.reportChange(callback, this, @scrollData)
-      )
+      , callback)
 
   ###
     Creates a event to check for horizontal bound collision
@@ -448,7 +450,7 @@ module.exports = class ScrollProxy
     @param [Function] callback the function to be called when event is fired
     @param [Number] offset Offset to check for (0 is defaut)
     @return [Object] The event just registered
-    @since 0.1.0
+    @since 0.2.0
     @private
   ###
   _createHorizontalBoundScrollEvent: (evt, callback, offset = 0) ->
@@ -456,12 +458,12 @@ module.exports = class ScrollProxy
       return @_createScrollEvent(evt, =>
         if @x <= Math.abs(offset)
           return SUtil.reportChange(callback, this, @scrollData)
-      , 0)
+      , callback, 0)
     else
       return @_createScrollEvent(evt, =>
         if (@scrollWidth - @x) - @width <= Math.abs(offset)
           return SUtil.reportChange(callback, this, @scrollData)
-      , 0)
+      , callback, 0)
 
   ###
     Creates a event to check for vertical bound collision
@@ -474,7 +476,7 @@ module.exports = class ScrollProxy
     @param [Function] callback the function to be called when event is fired
     @param [Number] offset Offset to check for
     @return [Object] The event just registered
-    @since 0.1.0
+    @since 0.2.0
     @private
   ###
   _createVerticalBoundScrollEvent: (evt, callback, offset = 0) ->
@@ -482,12 +484,12 @@ module.exports = class ScrollProxy
       return @_createScrollEvent(evt, =>
         if @y <= Math.abs(offset)
           return SUtil.reportChange(callback, this, @scrollData)
-      , 0)
+      , callback, 0)
     else
       return @_createScrollEvent(evt, =>
         if (@scrollHeight - @y) - @height <= Math.abs(offset)
           return SUtil.reportChange(callback, this, @scrollData)
-      , 0)
+      , callback, 0)
 
   ###
     Creates a event to check for element visibility as one scrolls
@@ -499,7 +501,7 @@ module.exports = class ScrollProxy
     @param [Function] callback the function to be called when event is fired
     @param [Number] offset Offset to check for
     @return [Object] The event just registered
-    @since 0.1.0
+    @since 0.2.0
     @private
   ###
   _createVisibilityScrollEvent: (evt, callback, el) ->
@@ -508,12 +510,12 @@ module.exports = class ScrollProxy
       return @_createScrollEvent(evt, =>
         if @isElementVisible(el)
           return SUtil.reportChange(callback, this, @scrollData)
-      )
+      , callback)
     else
       return @_createScrollEvent(evt, =>
         if not @isElementVisible(el)
           return SUtil.reportChange(callback, this, @scrollData)
-      )
+      , callback)
 
   ###
     The ScrollProxy constructor, use it to create new instances
@@ -526,7 +528,7 @@ module.exports = class ScrollProxy
       s = new ScrollProxy(window) # Remaps to window.document.body
     @param [HTMLElement] target The element to attach ScrollProxy
     @return [ScrollProxy] This instance
-    @since 0.1.0
+    @since 0.2.0
   ###
   constructor: (target = document) ->
     if target is document
@@ -678,26 +680,35 @@ module.exports = class ScrollProxy
     @param [Function] func The function to callback
     @param [Object] option The wildcard argument that goes with events
     @return [ScrollProxy] This instance
+    @since 0.2.0
   ###
   once: (evt, func, option) ->
     oneTimeFunction = =>
       SUtil.reportChange(func, this, @scrollData)
-      @off(evt)
+      @off(evt, oneTimeFunction)
     return @on(evt, oneTimeFunction, option)
 
   ###
-    Removes all events with the specified event name
-    @example Removing one event:
+    Removes all events with the specified event name or name and function
+    @example Removing all handlers for one event:
       s = new ScrollProxy()
       s.on('scroll', -> 'Free scrolling')
       s.off('scroll') # no more free scrolling
+    @example Removing just the specific function handler for the event
+      s = new ScrollProxy()
+      func = -> 'Free scrolling'
+      s.on('scroll', func)
+      s.off('scroll', func)
     @param [String] evt The event name to register
     @return [ScrollProxy] This instance
+    @since 0.2.0
   ###
-  off: (evt) ->
+  off: (evt, func) ->
     if not SUtil.isValidEventName(evt) then return this
     for event, i in @_events
-      if event? and evt is event.type
+      if not func? and event? and evt is event.type
+        @_removeEvent(event)
+      else if func? and event? and event.origin is func
         @_removeEvent(event)
     return this
 
@@ -711,6 +722,7 @@ module.exports = class ScrollProxy
       s.unregister() # Removing the target
       s.register() # OK. Target already removed, adding it again
     @return [ScrollProxy] This instance
+    @since 0.1.0
   ###
   register: ->
     matchingTarget = ScrollProxy._getElement(@_target)
@@ -725,6 +737,7 @@ module.exports = class ScrollProxy
       s = new ScrollProxy()
       s.unregister() # ScrollProxy now has no targets, so it deactivates
     @return [ScrollProxy] This instance
+    @since 0.1.0
   ###
   unregister: ->
     idx = ScrollProxy._targetList.length
@@ -743,6 +756,7 @@ module.exports = class ScrollProxy
       s = new ScrollProxy(ul)
       s.isElementVisible(li) # Visible? May be true or false
     @return [Boolean] Whether it's visible or not
+    @since 0.1.0
   ###
   isElementVisible: (el) ->
     @_checkElement(el)
@@ -754,6 +768,7 @@ module.exports = class ScrollProxy
       s = new ScrollProxy() # defaults to document.body
       s.disableHoverOnScroll() # Hover animations are now disabled on body
     @return [ScrollProxy] This instance
+    @since 0.2.0
   ###
   disableHoverOnScroll: ->
     @_createScrollEvent(ScrollProxy.DISABLE_HOVER, =>
@@ -762,7 +777,7 @@ module.exports = class ScrollProxy
       @_hoverTimeout = window.setTimeout(=>
         @_target.style.pointerEvents = 'auto'
       , @getHoverDelay())
-    , 0)
+    , null, 0)
     return this
 
   ###
@@ -772,6 +787,7 @@ module.exports = class ScrollProxy
       s.disableHoverOnScroll() # Hover animations on scrolling are now disabled
       s.enableHoverOnScroll() # Hover animations on scrolling are now restored
     @return [ScrollProxy] This instance
+    @since 0.1.0
   ###
   enableHoverOnScroll: ->
     @off(ScrollProxy.DISABLE_HOVER)
