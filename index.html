@@ -5,7 +5,7 @@
     <title>scroll-proxy by mkautzmann</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
@@ -16,12 +16,6 @@
       <a href="https://github.com/mkautzmann/scroll-proxy" class="btn">View on GitHub</a>
       <a href="https://github.com/mkautzmann/scroll-proxy/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/mkautzmann/scroll-proxy/tarball/master" class="btn">Download .tar.gz</a>
-      <p class="gh-btns">
-            <iframe src="https://ghbtns.com/github-btn.html?user=mkautzmann&repo=scroll-proxy&type=star&count=false&size=large"
-allowtransparency="true" frameborder="0" scrolling="0" width="100" height="30"></iframe>
-            <iframe src="https://ghbtns.com/github-btn.html?user=mkautzmann&repo=scroll-proxy&type=fork&count=false&size=large"
-allowtransparency="true" frameborder="0" scrolling="0" width="100" height="30"></iframe>
-        </p>
     </section>
 
     <section class="main-content">
@@ -175,7 +169,13 @@ s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">
 
 <p>Code:</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">THE</span> <span class="pl-c1">CODE</span></pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>offset-example1<span class="pl-pds">'</span></span>));
+s.on(<span class="pl-s"><span class="pl-pds">'</span>offsetX<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
+  changeColor(<span class="pl-s"><span class="pl-pds">'</span>blue<span class="pl-pds">'</span></span>);
+});
+s.on(<span class="pl-s"><span class="pl-pds">'</span>offsetY<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
+  changeColor(<span class="pl-s"><span class="pl-pds">'</span>green<span class="pl-pds">'</span></span>);
+});</pre></div>
 
 <p>You can also pass the third argument:</p>
 
@@ -183,7 +183,10 @@ s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">
 
 <p>Code:</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">THE</span> <span class="pl-c1">CODE</span></pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>offset-example2<span class="pl-pds">'</span></span>));
+s.once(<span class="pl-s"><span class="pl-pds">'</span>offsetY<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
+  changeColor(<span class="pl-s"><span class="pl-pds">'</span>green<span class="pl-pds">'</span></span>);
+}, <span class="pl-c1">300</span>);</pre></div>
 
 <p>Note the presence of the optional third argument on the second example. It indicates an <strong>offset</strong> to respect. The same logic applies to the <code>offsetY</code> event as well.</p>
 
@@ -201,7 +204,10 @@ s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">
 
 <p>INSERT EXAMPLE HERE</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>bound-example1<span class="pl-pds">'</span></span>));
+s.once(<span class="pl-s"><span class="pl-pds">'</span>bottom<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
+  changeColor(<span class="pl-s"><span class="pl-pds">'</span>green<span class="pl-pds">'</span></span>);
+});</pre></div>
 
 <p>And on other times you may want to get notified earlier. You can do that by passing the third argument.</p>
 
@@ -209,7 +215,13 @@ s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">
 
 <p>INSERT EXAMPLE HERE</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>bound-example2<span class="pl-pds">'</span></span>));
+s.once(<span class="pl-s"><span class="pl-pds">'</span>bottom<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
+  changeColor(<span class="pl-s"><span class="pl-pds">'</span>yellow<span class="pl-pds">'</span></span>);
+}, <span class="pl-c1">250</span>);
+s.once(<span class="pl-s"><span class="pl-pds">'</span>bottom<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
+  changeColor(<span class="pl-s"><span class="pl-pds">'</span>green<span class="pl-pds">'</span></span>);
+});</pre></div>
 
 <p><strong>The visible and invisible events</strong></p>
 
@@ -225,13 +237,13 @@ s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">
 
 <p>INSERT EXAMPLE HERE</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
-
-<p>Example of detecting invisible objects:</p>
-
-<p>INSERT EXAMPLE HERE</p>
-
-<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>visibility-example<span class="pl-pds">'</span></span>));
+s.on(<span class="pl-s"><span class="pl-pds">'</span>visible<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
+  report(<span class="pl-s"><span class="pl-pds">'</span>SQUARE VISIBLE :-)<span class="pl-pds">'</span></span>);
+}, square);
+s.on(<span class="pl-s"><span class="pl-pds">'</span>invisible<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
+  report(<span class="pl-s"><span class="pl-pds">'</span>SQUARE NOT VISIBLE :-(<span class="pl-pds">'</span></span>);
+}, square);</pre></div>
 
 <h3>
 <a id="getting-metadata" class="anchor" href="#getting-metadata" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting metadata</h3>
@@ -257,7 +269,16 @@ s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">
 
 <p>Code:</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>metadata-example<span class="pl-pds">'</span></span>));
+s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
+  <span class="pl-k">var</span> output <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>X: <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-c1">x</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;br&gt;<span class="pl-pds">'</span></span>;
+  output <span class="pl-k">+=</span>    <span class="pl-s"><span class="pl-pds">'</span>Y: <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-c1">y</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;br&gt;<span class="pl-pds">'</span></span>;
+  output <span class="pl-k">+=</span>    <span class="pl-s"><span class="pl-pds">'</span>Element Width: <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-c1">width</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;br&gt;<span class="pl-pds">'</span></span>;
+  output <span class="pl-k">+=</span>    <span class="pl-s"><span class="pl-pds">'</span>Element Height: <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-c1">height</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;br&gt;<span class="pl-pds">'</span></span>;
+  output <span class="pl-k">+=</span>    <span class="pl-s"><span class="pl-pds">'</span>Scroll Width: <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-v">this</span>.scrollWidth <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;br&gt;<span class="pl-pds">'</span></span>;
+  output <span class="pl-k">+=</span>    <span class="pl-s"><span class="pl-pds">'</span>Scroll Height: <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-v">this</span>.scrollHeight;
+  report(output);
+});</pre></div>
 
 <h3>
 <a id="getting-rid-of-unused-events" class="anchor" href="#getting-rid-of-unused-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting rid of unused events</h3>
@@ -396,7 +417,7 @@ s.setHoverDelay(<span class="pl-c1">100</span>);</pre></div>
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
-<p><a href="https://github.com/mkautzmann/scroll-proxy/blob/master/LICENSE">MIT License</a> © Matheus Kautzmann</p>
+<p><a href="LICENSE">MIT License</a> © Matheus Kautzmann</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mkautzmann/scroll-proxy">scroll-proxy</a> is maintained by <a href="https://github.com/mkautzmann">mkautzmann</a>.</span>
