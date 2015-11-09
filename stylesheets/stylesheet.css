@@ -220,6 +220,93 @@ a {
     padding: 2rem 1rem;
     font-size: 1rem; } }
 
+.example {
+  width: 100%;
+  max-width: 25rem;
+  border: 1px solid #bbb;
+  border-radius: .3rem;
+  background: #eff0f1;
+  overflow: hidden;
+}
+
+.example .label {
+  width: inherit;
+  height: 2.5rem;
+  padding: .5rem;
+  font-weight: bold;
+  border-bottom: inherit;
+}
+
+.example .scrollable {
+  position: relative;
+  width: 100%;
+  height: 20rem;
+  background: white;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+  overflow-y: scroll;
+}
+
+.xscroll {
+  overflow-x: scroll;
+}
+
+.example .output {
+  width: inherit;
+  padding: .5rem;
+  border-top: inherit;
+}
+
+.example .title {
+  display: block;
+  font-weight: bold;
+}
+
+.example .log {
+  margin-top: 1rem;
+}
+
+.bigDiv {
+  width: 1000px;
+  height: 1000px;
+  padding: 8rem;
+}
+
+.square {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  width: 5rem;
+  height: 5rem;
+}
+
+.circle {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 100%;
+}
+
+.blue {
+  background: blue;
+}
+
+.red {
+  background: red;
+}
+
+.green {
+  background: #159957;
+  color: white;
+}
+
+.green-btn {
+  background: #159957;
+}
+
+.green-btn:hover {
+  opacity: .5;
+  background: #159957;
+}
+
 .site-footer {
   padding-top: 2rem;
   margin-top: 2rem;

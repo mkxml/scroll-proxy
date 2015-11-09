@@ -16,13 +16,27 @@
       <a href="https://github.com/mkautzmann/scroll-proxy" class="btn">View on GitHub</a>
       <a href="https://github.com/mkautzmann/scroll-proxy/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/mkautzmann/scroll-proxy/tarball/master" class="btn">Download .tar.gz</a>
+<<<<<<< HEAD
+      <p class="gh-btns">
+            <iframe src="https://ghbtns.com/github-btn.html?user=mkautzmann&repo=scroll-proxy&type=star&count=false&size=large"
+allowtransparency="true" frameborder="0" scrolling="0" width="100" height="30"></iframe>
+            <iframe src="https://ghbtns.com/github-btn.html?user=mkautzmann&repo=scroll-proxy&type=fork&count=false&size=large"
+allowtransparency="true" frameborder="0" scrolling="0" width="100" height="30"></iframe>
+            <iframe src="https://ghbtns.com/github-btn.html?user=mkautzmann&count=false&size=large&type=follow"
+            allowtransparency="true" frameborder="0" scrolling="0" width="220" height="30"></iframe>
+        </p>
+>>>>>>> page-with-demos
     </section>
-
+  <section id="sticky-header" class="page-header" style="width: 100%; height: 80px; margin: 0; padding: 20px; display: none; position: fixed; top: 0; left: 0; z-index: 9999;">
+    <a href="https://github.com/mkautzmann/scroll-proxy" class="btn">View on GitHub</a>
+    <a href="https://github.com/mkautzmann/scroll-proxy/zipball/master" class="btn">Download .zip</a>
+    <a href="https://github.com/mkautzmann/scroll-proxy/tarball/master" class="btn">Download .tar.gz</a>
+  </section>
     <section class="main-content">
       <h2>
 <a id="goal" class="anchor" href="#goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Goal</h2>
 
-<p>This package is designed to help dealing with the scroll event in the <strong>browser</strong> in the most smoothly way possible.</p>
+<p>This package is designed to help dealing with the scroll event in the <strong>browser</strong> in the smoothest way possible.</p>
 
 <p>Yes, web browsers already deliver ways to listen for the scroll event and they work really well. What <code>scroll-proxy</code> does is proxy the calls from you to the native scroll event and the other way around, doing some transformations in the process.</p>
 
@@ -43,7 +57,7 @@
 
 <p><code>bower install scroll-proxy --save</code></p>
 
-<p>If you are not into package management there is also the option of <a href="">direct download</a>, after unzipping the JS file will be in the <code>dist</code> folder.</p>
+<p>If you are not into package management there is also the option of <a href="https://github.com/mkautzmann/scroll-proxy/zipball/master">direct download</a>, after unzipping the JS file will be in the <code>dist</code> folder.</p>
 
 <p>Don't want to download at all? No problem. Just get it from one of the <a href="">CDN providers</a>.</p>
 
@@ -161,11 +175,18 @@ s.on(<span class="pl-s"><span class="pl-pds">'</span>scroll<span class="pl-pds">
 
 <p><strong>The offset events</strong></p>
 
-<p>The <code>offsetX</code> and <code>offsetY</code> accept a third argument indicating a offset for <code>scroll-proxy</code> it to consider when firing the event. Take a look:</p>
+<p>Offset events are great when you want to check scroll in a specific direction, the next example shows that in a simple way. The circle starts in red and changes to green if you scroll vertically and blue if you scroll horizontally</p>
 
-<p>Example:</p>
+<p>Try it out! Scroll the area below.</p>
 
-<p>INSERT EXAMPLE HERE</p>
+<div class="example">
+  <div class="label"><span>#offset-example1</span></div>
+  <div class="scrollable xscroll" id="offset-example1">
+    <div class="bigDiv">
+      <div class="circle red" id="offset-example1-circle"></div>
+    </div>
+  </div>
+</div>
 
 <p>Code:</p>
 
@@ -177,9 +198,16 @@ s.on(<span class="pl-s"><span class="pl-pds">'</span>offsetY<span class="pl-pds"
   changeColor(<span class="pl-s"><span class="pl-pds">'</span>green<span class="pl-pds">'</span></span>);
 });</pre></div>
 
-<p>You can also pass the third argument:</p>
+<p>The <code>offsetX</code> and <code>offsetY</code> accept a third argument indicating a offset for <code>scroll-proxy</code> it to consider when firing the event. Take a look as the red bar becomes green when it fills the entire scroll area.</p>
 
-<p>INSERT EXAMPLE HERE</p>
+<div class="example">
+  <div class="label"><span>#offset-example2</span></div>
+  <div class="scrollable xscroll" id="offset-example2">
+    <div id="offset-example2-box" class="bigDiv red" style="margin-top: 300px;"></div>
+  </div>
+</div>
+
+<p>That happened because we are passing the third argument with value 300, so ScrollProxy will emit the offset event when scroll past 300 pixels.</p>
 
 <p>Code:</p>
 
@@ -188,7 +216,7 @@ s.once(<span class="pl-s"><span class="pl-pds">'</span>offsetY<span class="pl-pd
   changeColor(<span class="pl-s"><span class="pl-pds">'</span>green<span class="pl-pds">'</span></span>);
 }, <span class="pl-c1">300</span>);</pre></div>
 
-<p>Note the presence of the optional third argument on the second example. It indicates an <strong>offset</strong> to respect. The same logic applies to the <code>offsetY</code> event as well.</p>
+<p>Note the presence of the optional third argument on the second example. It indicates an <strong>offset</strong> to respect. The same logic applies to the <code>offsetX</code> event as well.</p>
 
 <p><strong>The top, bottom, left and right events</strong></p>
 
@@ -200,9 +228,18 @@ s.once(<span class="pl-s"><span class="pl-pds">'</span>offsetY<span class="pl-pd
 
 <p>Sometimes you want to actually get notified when the scroll area reaches the bottom.</p>
 
-<p>Example:</p>
+<p>See the text color turn green when you reach the bottom of the scroll area below in the next example:</p>
 
-<p>INSERT EXAMPLE HERE</p>
+<div class="example">
+  <div class="label"><span>#bound-example1</span></div>
+  <div class="scrollable xscroll" id="bound-example1">
+    <div id="bound-example1-box" class="bigDiv" style="width: inherit; padding: .5rem; margin: 0;">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lectus ex, maximus sit amet ante mollis, fermentum blandit nulla. Nunc vehicula, nunc at placerat tempus, metus ante lacinia arcu, eu accumsan risus est id lectus. Phasellus semper orci in dolor finibus, quis molestie massa gravida. Donec sollicitudin nulla at orci iaculis, ac pretium ipsum rutrum. Ut accumsan, lacus tristique viverra commodo, velit nisl viverra sem, in pharetra risus massa sit amet nunc. Nam rutrum elit sed ex cursus suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum rutrum, nibh id viverra convallis, ipsum nisi condimentum mauris, vel imperdiet quam nunc efficitur nisl. Cras elementum odio lorem, eget semper ligula malesuada id. In hac habitasse platea dictumst.Duis venenatis massa quis sapien porta convallis. Aenean facilisis ante vitae nibh laoreet, id vestibulum lacus tristique. Curabitur consectetur nunc nec dui fringilla posuere. Vestibulum nec convallis elit. Fusce leo sapien, sodales ac mauris et, imperdiet iaculis tellus. Nullam sagittis placerat condimentum. Duis ultricies augue id nibh rutrum, vel auctor diam vulputate. Aliquam scelerisque ex turpis, id fermentum urna condimentum id. Proin semper, lorem sed scelerisque faucibus, felis velit consequat metus, malesuada ultrices tellus est eget leo. Sed in velit id orci condimentum mollis nec eu purus. Integer dignissim lorem purus, id porta nibh blandit id. Aliquam ac diam finibus, lacinia leo sit amet, rutrum nibh.</p>
+    </div>
+  </div>
+</div>
+
+<p>Code:</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>bound-example1<span class="pl-pds">'</span></span>));
 s.once(<span class="pl-s"><span class="pl-pds">'</span>bottom<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
@@ -211,9 +248,18 @@ s.once(<span class="pl-s"><span class="pl-pds">'</span>bottom<span class="pl-pds
 
 <p>And on other times you may want to get notified earlier. You can do that by passing the third argument.</p>
 
-<p>Example:</p>
+<p>The next example looks like the previous one but this time the text turns yellow when approaching the end. Then, when finally hitting it, it turns green:</p>
 
-<p>INSERT EXAMPLE HERE</p>
+<div class="example">
+  <div class="label"><span>#bound-example2</span></div>
+  <div class="scrollable xscroll" id="bound-example2">
+    <div id="bound-example2-box" class="bigDiv" style="width: inherit; padding: .5rem; margin: 0;">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lectus ex, maximus sit amet ante mollis, fermentum blandit nulla. Nunc vehicula, nunc at placerat tempus, metus ante lacinia arcu, eu accumsan risus est id lectus. Phasellus semper orci in dolor finibus, quis molestie massa gravida. Donec sollicitudin nulla at orci iaculis, ac pretium ipsum rutrum. Ut accumsan, lacus tristique viverra commodo, velit nisl viverra sem, in pharetra risus massa sit amet nunc. Nam rutrum elit sed ex cursus suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum rutrum, nibh id viverra convallis, ipsum nisi condimentum mauris, vel imperdiet quam nunc efficitur nisl. Cras elementum odio lorem, eget semper ligula malesuada id. In hac habitasse platea dictumst.Duis venenatis massa quis sapien porta convallis. Aenean facilisis ante vitae nibh laoreet, id vestibulum lacus tristique. Curabitur consectetur nunc nec dui fringilla posuere. Vestibulum nec convallis elit. Fusce leo sapien, sodales ac mauris et, imperdiet iaculis tellus. Nullam sagittis placerat condimentum. Duis ultricies augue id nibh rutrum, vel auctor diam vulputate. Aliquam scelerisque ex turpis, id fermentum urna condimentum id. Proin semper, lorem sed scelerisque faucibus, felis velit consequat metus, malesuada ultrices tellus est eget leo. Sed in velit id orci condimentum mollis nec eu purus. Integer dignissim lorem purus, id porta nibh blandit id. Aliquam ac diam finibus, lacinia leo sit amet, rutrum nibh.</p>
+    </div>
+  </div>
+</div>
+
+<p>Code:</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>bound-example2<span class="pl-pds">'</span></span>));
 s.once(<span class="pl-s"><span class="pl-pds">'</span>bottom<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
@@ -233,8 +279,9 @@ s.once(<span class="pl-s"><span class="pl-pds">'</span>bottom<span class="pl-pds
 
 <p>There's another catch: <strong>the element to be checked must be a direct child</strong> of the scroll area <code>scroll-proxy</code> is attached to.</p>
 
-<p>Example of detecting visible objects:</p>
+<p>Example of detecting changes in objects visibility:</p>
 
+<<<<<<< HEAD
 <p>INSERT EXAMPLE HERE</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>visibility-example<span class="pl-pds">'</span></span>));
@@ -244,6 +291,21 @@ s.on(<span class="pl-s"><span class="pl-pds">'</span>visible<span class="pl-pds"
 s.on(<span class="pl-s"><span class="pl-pds">'</span>invisible<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
   report(<span class="pl-s"><span class="pl-pds">'</span>SQUARE NOT VISIBLE :-(<span class="pl-pds">'</span></span>);
 }, square);</pre></div>
+<div class="example">
+  <div class="label"><span>#visibility-example</span></div>
+  <div class="scrollable xscroll" id="visibility-example">
+    <div class="square red" id="visibility-example-square"></div>
+    <div class="bigDiv"></div>
+  </div>
+  <div class="output">
+    <span id="visibility-example-log" class="title"></span>
+  </div>
+</div>
+
+<p>Code:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
+>>>>>>> page-with-demos
 
 <h3>
 <a id="getting-metadata" class="anchor" href="#getting-metadata" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting metadata</h3>
@@ -265,7 +327,18 @@ s.on(<span class="pl-s"><span class="pl-pds">'</span>invisible<span class="pl-pd
 
 <p>Example:</p>
 
-<p>INSERT EXAMPLE HERE</p>
+<div class="example">
+  <div class="label"><span>#metadata-example</span></div>
+  <div class="scrollable" id="metadata-example">
+    <div id="metadata-example-box" class="bigDiv" style="padding: .5rem; margin: 0;">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lectus ex, maximus sit amet ante mollis, fermentum blandit nulla. Nunc vehicula, nunc at placerat tempus, metus ante lacinia arcu, eu accumsan risus est id lectus. Phasellus semper orci in dolor finibus, quis molestie massa gravida. Donec sollicitudin nulla at orci iaculis, ac pretium ipsum rutrum. Ut accumsan, lacus tristique viverra commodo, velit nisl viverra sem, in pharetra risus massa sit amet nunc. Nam rutrum elit sed ex cursus suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum rutrum, nibh id viverra convallis, ipsum nisi condimentum mauris, vel imperdiet quam nunc efficitur nisl. Cras elementum odio lorem, eget semper ligula malesuada id. In hac habitasse platea dictumst.Duis venenatis massa quis sapien porta convallis. Aenean facilisis ante vitae nibh laoreet, id vestibulum lacus tristique. Curabitur consectetur nunc nec dui fringilla posuere. Vestibulum nec convallis elit. Fusce leo sapien, sodales ac mauris et, imperdiet iaculis tellus. Nullam sagittis placerat condimentum. Duis ultricies augue id nibh rutrum, vel auctor diam vulputate. Aliquam scelerisque ex turpis, id fermentum urna condimentum id. Proin semper, lorem sed scelerisque faucibus, felis velit consequat metus, malesuada ultrices tellus est eget leo. Sed in velit id orci condimentum mollis nec eu purus. Integer dignissim lorem purus, id porta nibh blandit id. Aliquam ac diam finibus, lacinia leo sit amet, rutrum nibh.</p>
+    </div>
+  </div>
+  <div class="output">
+    <span class="title">Output Log:</span>
+    <span id="metadata-example-log"></span>
+  </div>
+</div>
 
 <p>Code:</p>
 
@@ -369,7 +442,7 @@ s.setHoverDelay(<span class="pl-c1">100</span>);</pre></div>
 
 <p>Try pressing the following button, it will toggle the hover animations on this very page. Then try scrolling over buttons to see if they react or not.</p>
 
-<p>INSERT DEMO BUTTON HERE</p>
+<button id="toggleAnimationBtn" class="btn green-btn">Disable hover animations</button>
 
 <h3>
 <a id="other-great-functionality" class="anchor" href="#other-great-functionality" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other great functionality</h3>
@@ -380,8 +453,6 @@ s.setHoverDelay(<span class="pl-c1">100</span>);</pre></div>
 <a id="browser-support" class="anchor" href="#browser-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser support</h2>
 
 <p>This library works with most modern browsers. Some features like the animation toggling require support for the css <a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS/pointer-events">pointer-events</a> spec.</p>
-
-<p>We test practical support in a handful of browsers over SauceLabs, the support matrix in on the <a href="#top">top of this file</a>.</p>
 
 <p>Theoretical support should include the following browsers:</p>
 
@@ -427,6 +498,11 @@ s.setHoverDelay(<span class="pl-c1">100</span>);</pre></div>
 
     </section>
 
-  
+  <script src="javascript/scroll-proxy.min.js"></script>
+  <script>
+    // Setup a ScrollProxy in the document.body of this page
+    window.myScroll = new ScrollProxy();
+  </script>
+  <script src="javascript/demos.js"></script>
   </body>
 </html>
