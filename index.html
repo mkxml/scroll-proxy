@@ -5,7 +5,7 @@
     <title>scroll-proxy by mkautzmann</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
@@ -16,7 +16,6 @@
       <a href="https://github.com/mkautzmann/scroll-proxy" class="btn">View on GitHub</a>
       <a href="https://github.com/mkautzmann/scroll-proxy/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/mkautzmann/scroll-proxy/tarball/master" class="btn">Download .tar.gz</a>
-<<<<<<< HEAD
       <p class="gh-btns">
             <iframe src="https://ghbtns.com/github-btn.html?user=mkautzmann&repo=scroll-proxy&type=star&count=false&size=large"
 allowtransparency="true" frameborder="0" scrolling="0" width="100" height="30"></iframe>
@@ -25,12 +24,9 @@ allowtransparency="true" frameborder="0" scrolling="0" width="100" height="30"><
             <iframe src="https://ghbtns.com/github-btn.html?user=mkautzmann&count=false&size=large&type=follow"
             allowtransparency="true" frameborder="0" scrolling="0" width="220" height="30"></iframe>
         </p>
->>>>>>> page-with-demos
     </section>
-  <section id="sticky-header" class="page-header" style="width: 100%; height: 80px; margin: 0; padding: 20px; display: none; position: fixed; top: 0; left: 0; z-index: 9999;">
+  <section id="sticky-header" class="page-header" style="width: 100%; height: 80px; margin: 0; padding: 15px; display: none; position: fixed; top: 0; left: 0; z-index: 9999;">
     <a href="https://github.com/mkautzmann/scroll-proxy" class="btn">View on GitHub</a>
-    <a href="https://github.com/mkautzmann/scroll-proxy/zipball/master" class="btn">Download .zip</a>
-    <a href="https://github.com/mkautzmann/scroll-proxy/tarball/master" class="btn">Download .tar.gz</a>
   </section>
     <section class="main-content">
       <h2>
@@ -43,6 +39,8 @@ allowtransparency="true" frameborder="0" scrolling="0" width="100" height="30"><
 <p>It applies some techniques already frequently used by web developers such as <strong>function throttling</strong>, <strong>animation toggling</strong> and a few others on <strong>scroll</strong>-related events. Delivering a small library one can just download and use.</p>
 
 <p>The project's main focus is to help developers achieve great scroll performance in their apps while still being able to implement stuff like <strong>scroll-based animations</strong>, <strong>sticky headers</strong> and <strong>infinite scrolling</strong>.</p>
+
+<p>In fact, the sticky header on this page is made in a few lines of code using <code>scroll-proxy</code>. Check your inspector!</p>
 
 <h2>
 <a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h2>
@@ -59,7 +57,7 @@ allowtransparency="true" frameborder="0" scrolling="0" width="100" height="30"><
 
 <p>If you are not into package management there is also the option of <a href="https://github.com/mkautzmann/scroll-proxy/zipball/master">direct download</a>, after unzipping the JS file will be in the <code>dist</code> folder.</p>
 
-<p>Don't want to download at all? No problem. Just get it from one of the <a href="">CDN providers</a>.</p>
+<p>Don't want to download at all? No problem. Just get it from one of the <a href="https://github.com/mkautzmann/scroll-proxy/wiki/CDN-providers">CDN providers</a>.</p>
 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
@@ -281,16 +279,6 @@ s.once(<span class="pl-s"><span class="pl-pds">'</span>bottom<span class="pl-pds
 
 <p>Example of detecting changes in objects visibility:</p>
 
-<<<<<<< HEAD
-<p>INSERT EXAMPLE HERE</p>
-
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>visibility-example<span class="pl-pds">'</span></span>));
-s.on(<span class="pl-s"><span class="pl-pds">'</span>visible<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
-  report(<span class="pl-s"><span class="pl-pds">'</span>SQUARE VISIBLE :-)<span class="pl-pds">'</span></span>);
-}, square);
-s.on(<span class="pl-s"><span class="pl-pds">'</span>invisible<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
-  report(<span class="pl-s"><span class="pl-pds">'</span>SQUARE NOT VISIBLE :-(<span class="pl-pds">'</span></span>);
-}, square);</pre></div>
 <div class="example">
   <div class="label"><span>#visibility-example</span></div>
   <div class="scrollable xscroll" id="visibility-example">
@@ -304,8 +292,13 @@ s.on(<span class="pl-s"><span class="pl-pds">'</span>invisible<span class="pl-pd
 
 <p>Code:</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-c1">INSERT</span> <span class="pl-c1">CODE</span> <span class="pl-c1">HERE</span></pre></div>
->>>>>>> page-with-demos
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ScrollProxy</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>visibility-example<span class="pl-pds">'</span></span>));
+s.on(<span class="pl-s"><span class="pl-pds">'</span>visible<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
+  report(<span class="pl-s"><span class="pl-pds">'</span>SQUARE VISIBLE :-)<span class="pl-pds">'</span></span>);
+}, square);
+s.on(<span class="pl-s"><span class="pl-pds">'</span>invisible<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(){
+  report(<span class="pl-s"><span class="pl-pds">'</span>SQUARE NOT VISIBLE :-(<span class="pl-pds">'</span></span>);
+}, square);</pre></div>
 
 <h3>
 <a id="getting-metadata" class="anchor" href="#getting-metadata" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting metadata</h3>
