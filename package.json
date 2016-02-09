@@ -1,8 +1,8 @@
 {
   "name": "scroll-proxy",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Easy scroll handling in the browser. Zero dependencies. ~2kb gzipped",
-  "main": "dist/scroll-proxy.min.js",
+  "main": "dist/scroll-proxy.js",
   "scripts": {
     "test": "grunt test",
     "coverage": "node_modules/mocha-phantomjs/bin/mocha-phantomjs -R node_modules/mocha-lcov-reporter/lib/lcov.js test/index.html | sed -n '1!p' | sed 's,SF:,SF:src/,' | node_modules/coveralls/bin/coveralls.js"
@@ -38,6 +38,7 @@
     "grunt-codo": "~0.2.0",
     "grunt-coffeelint": "~0.0.13",
     "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-coffee": "~0.13.0",
     "grunt-contrib-connect": "~0.11.2",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-http-server": "~1.13.0",

@@ -76,6 +76,20 @@ module.exports = (grunt) ->
       }
     }
 
+    # Compile Coffee for NPM bundle
+    coffee: {
+      main: {
+        files: {
+          'dist/scroll-proxy.js': 'src/ScrollProxy.coffee'
+          'dist/SUtil.js': 'src/SUtil.coffee'
+        }
+      }
+      options: {
+        bare: true
+        banner: '/*<%= pkg.name %>@<%= pkg.version %>*/'
+      }
+    }
+
     # Run tests using Mocha locally
     mochify: {
       test: {
@@ -174,6 +188,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-codo')
   grunt.loadNpmTasks('grunt-coffeelint')
   grunt.loadNpmTasks('grunt-contrib-clean')
+  grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-mochify')
   grunt.loadNpmTasks('grunt-contrib-connect')
   grunt.loadNpmTasks('grunt-contrib-watch')
@@ -194,6 +209,7 @@ module.exports = (grunt) ->
   ])
   grunt.registerTask('build', [
     'test'
+    'coffee'
     'browserify:standalone'
     'docs'
   ])
